@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_file
+from flask import Flask, render_template, send_file, request
 import urllib
 
 app = Flask(__name__)
@@ -12,10 +12,12 @@ def hello(name=None):
 
     return render_template('index.html'), 200, headers
 
-@app.route("/test/<url>")
-def check_route(url=None):
+@app.route("/check")
+def check_route():
     # TODO: find out the best way to pass the url. for now it seems to be a param
-    return "testing {0}".format(url)
+    url = request.args.get("url")
+
+    return "testing {0}".format(url) if url else "no Url Provided. Use /check?url=htt..."
     #r = requests.get(decoder_url)
     #return render_template("check.html", url = decoder_url), r.status_code
 
