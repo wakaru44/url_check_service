@@ -2,6 +2,10 @@
 
 a mockup for a URL checker on js that is ultra easy to implement.
 
+In order to be able to request any url, overcoming the limitation of Access-Control-Allow-Origin in js, we will have to perform the request from the server, and then tell the answer to js from our own AJAX interface.
+
+Ideally, we would like to keep configuration in one side (probably the js side of things) , provide an initial run before configuring and allow to configure afterwards.
+
 # The goal
 
 just a simple URL checker, that with a provided list of URL, it checks them on the press of a button, or in reload.
