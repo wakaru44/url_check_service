@@ -1,4 +1,6 @@
 from flask import Flask, render_template, send_file, request
+import requests
+from requests import ConnectionError
 import urllib
 
 app = Flask(__name__)
@@ -14,12 +16,16 @@ def hello(name=None):
 
 @app.route("/check")
 def check_route():
-    # TODO: find out the best way to pass the url. for now it seems to be a param
     url = request.args.get("url")
 
-    return "testing {0}".format(url) if url else "no Url Provided. Use /check?url=htt..."
-    #r = requests.get(decoder_url)
-    #return render_template("check.html", url = decoder_url), r.status_code
+    #url_test_encoding = urllib.urlencode({"url":"http://google.com"})
+    #return "testing {0}".format(url) if url else "no Url Provided. Use /check?url=htt..."
+    try:
+        r = requests.get(url)
+    except ConnectionError as e:
+        return render_template("check.html", url = url), 500
+
+    return render_template("check.html", url = url), r.status_code
 
 if __name__=="__main__":
     app.run( debug=True )
