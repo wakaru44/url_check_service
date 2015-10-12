@@ -10,7 +10,7 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>Your page title here :)</title>
+  <title>URL Check :)</title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -47,12 +47,10 @@
 	<!--
 	<a class="check" href="example_of_url">test_to_validate</a>
 	-->
-	<a class="button" href="http://chef.picsolve.net">200</a>
-	<a class="button" href="https://jenkins-london-internal.picsolve.net">200</a>
-	<a class="button" href="http://jenkins-london-internal.picsolve.net">500</a>
-	<a class="button" href="http://artifactory.dev.services.picsolve.net:8081">200</a>
-	<a class="button" href="http://aoeuaoeuaoeuaoeuaoeuc">200</a>
-	<a class="button" href="http://google.co.uk">404</a>
+	<a class="button" href="http://google.co.uk">200</a>
+	<a class="button" href="http://non-existant-url">500</a>
+	<a class="button" href="http://this_is_a_failing_test">200</a>
+	<a class="button" href="http://non-existant-url">200</a>
 	</div> <!-- tocheck -->
 
       </div>
@@ -75,25 +73,20 @@ $( "a" ).each(function( index, obj )
 	var spec = $(this).text();
 	var url = $(this).attr("href")
 	// Then do the query and wait for results
-	check = verify_url(spec, url)
+	//check = checkRemoteUrlOnLocal(spec, url)
+
+	check = checkRemoteUrlOnLocal(url)
 	//And now we do the magic, replacing the text with results
-	check.done( function(response_data, responseText, xhrObject){
+	check.always( function(response_data, responseText, xhrObject){
 		console.log("this is how we roll")
-		console.log(response_data)
-		console.log(responseText)
+		console.log(xhrObject.status)
 		console.log(xhrObject)
-		if (check != "Ok")
-		{ //If the test failed, do magic and paint button red
-			obj.style.backgroundColor = "red";
-			obj.style.color = "white";
-			result_display = url + " test failed: \n" + check 
-		} else {
-			//if passes, paint it green
-			obj.style.backgroundColor = "green";
-			obj.style.color = "white";
-			result_display = check
-		}
+		result_display = pass_the_test( spec, xhrObject, obj);
 		$(that).text( result_display ); 
+	});
+	check.fail( function(response_data, responseText, xhrObject){
+		result_display = pass_the_test(spec, xhrObject, obj);
+		$(that).text( result_display );
 	});
 })
 
