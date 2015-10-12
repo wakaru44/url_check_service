@@ -5,6 +5,9 @@ import urllib
 
 app = Flask(__name__)
 
+#template="index.html"
+template="index.html"
+
 @app.route('/')
 def hello(name=None):
     #self.response.headers['Content-Type'] = 'text/plain'
@@ -12,7 +15,7 @@ def hello(name=None):
     #self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     headers = {'Access-Control-Allow-Origin': "*"}
 
-    return render_template('index.html'), 200, headers
+    return render_template(template), 200, headers
 
 @app.route("/check")
 def check_route():
