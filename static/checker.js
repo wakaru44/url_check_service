@@ -43,11 +43,11 @@ function verify_url( spec, url )
 	code = check
 	if (check == spec)
 	{
-		return "Ok" //TODO: make a proper check of the result
+		return "Ok" //KISS
 	}
 	else
 	{
-		return "The result doesn't match Spec" + "check: " + check + "spec: " + spec
+		return "The result doesn't match Spec;\n " + "check: " + check + "spec: " + spec
 	}
 }
 
