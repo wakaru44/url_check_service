@@ -26,3 +26,10 @@ a mock to test how to check the url on js.
 	- supporting on the backend some kind of file saving
 
 - make it Async, the way it is, is embarrasing
+
+- make it verify that a string exists in the content
+
+# Quirks
+
+- I have to add the status code 600 when I check the remote URL in the server, so I can tell the difference between my results and the real ones. Using my status code as data is a big mistake
+
