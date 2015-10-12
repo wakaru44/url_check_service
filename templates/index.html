@@ -4,8 +4,8 @@
 
   <!-- Special Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <script src="static/checker.js" type="text/javascript" > </script>
   <script src="static/jquery-1.10.2.js"> </script>
+  <script src="static/checker.js" type="text/javascript" > </script>
 
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -47,9 +47,11 @@
 	<!--
 	<a class="check" href="example_of_url">test_to_validate</a>
 	-->
-	<a class="button" href="http://google.co.uk">200</a>
-	<a class="button" href="http://aoeuaoeuaoeuaoeuaoeuc.def">500</a>
-	<a class="button" href="http://aoeuaoeuaoeuaoeuaoeuc.def">200</a>
+	<a class="button" href="http://chef.picsolve.net">200</a>
+	<a class="button" href="https://jenkins-london-internal.picsolve.net">200</a>
+	<a class="button" href="http://jenkins-london-internal.picsolve.net">500</a>
+	<a class="button" href="http://artifactory.dev.services.picsolve.net:8081">200</a>
+	<a class="button" href="http://aoeuaoeuaoeuaoeuaoeuc">200</a>
 	<a class="button" href="http://google.co.uk">404</a>
 	</div> <!-- tocheck -->
 
@@ -64,26 +66,40 @@
 <script type="text/javascript">
 
 // And now we use jQuery to call the tester function, replacing the test with the result
+
+$( function () {
+	//do your stuff here
 $( "a" ).each(function( index, obj )
 {
+	var that = this
 	var spec = $(this).text();
 	var url = $(this).attr("href")
 	// Then do the query and wait for results
 	check = verify_url(spec, url)
 	//And now we do the magic, replacing the text with results
-	if (check != "Ok")
-	{ //If the test failed, do magic and paint button red
-		obj.style.backgroundColor = "red";
-		obj.style.color = "white";
-		result_display = url + " test failed: \n" + check 
-	} else {
-		//if passes, paint it green
-	        obj.style.backgroundColor = "green";
-		obj.style.color = "white";
-		result_display = check
-	}
-	$(this).text( result_display ); 
+	check.done( function(response_data, responseText, xhrObject){
+		console.log("this is how we roll")
+		console.log(response_data)
+		console.log(responseText)
+		console.log(xhrObject)
+		if (check != "Ok")
+		{ //If the test failed, do magic and paint button red
+			obj.style.backgroundColor = "red";
+			obj.style.color = "white";
+			result_display = url + " test failed: \n" + check 
+		} else {
+			//if passes, paint it green
+			obj.style.backgroundColor = "green";
+			obj.style.color = "white";
+			result_display = check
+		}
+		$(that).text( result_display ); 
+	});
 })
+
+//end of async stuff
+
+});
 
 </script>
 	

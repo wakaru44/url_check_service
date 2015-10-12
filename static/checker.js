@@ -6,20 +6,6 @@ function httpGet(theUrl)
 	var xmlHttp = null;
 	xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("GET", theUrl, false);
-	//TODO: clarify if we need the below snippet or not
-//	xmlHttp.onreadystatechange = function(){
-//		if (xmlHttp.readyState === 4){
-//			if (xmlHttp.status === 404 || xmlHttp.status === 500) {
-//				return xmlHttp.status;
-//				//alert("Oh no, it does not exist!");
-//				//Should be "display the button in red" or smthng
-//			}
-//			if (xmlHttp.status === 200) {
-//				return 200;
-//				//alert("Yes, it exists");
-//			}
-//		}
-//	};
 	xmlHttp.send( null );
 	return xmlHttp.status.toString()
 	//return { //alt return with extra data
@@ -33,22 +19,43 @@ function checkRemoteUrlOnLocal( url )
 	// We will have to transform that url into a valid internal query to our backend
 	base_url = get_base_url();
 	checker_url = base_url + "/check?url=" + encodeURIComponent(url);
-	result = httpGet( checker_url );
+	//result =httpGet( checker_url ); //old, sync crap
+	//TODO: This crap is not working
+	var status_und_stuff;
+	result = $.ajax( checker_url )
+	//result.success( function(response_data, statusText, xhrObj)
+			//{
+				//console.log("then whatever");
+				//console.log(response_data);
+				//console.log(statusText);
+				//console.log(xhrObj);
+				//status_und_stuff = xhrObj.status;
+				//return status_und_stuff;
+			//})
+		//.fail( function(a) { console.log("shit happens", a); } );
+	//result.fail(function(data){console.log("failed"); console.log(data.status.toString()); status_und_stuff = data.status})
+	//result.done(function(data){console.log("success"); console.log(200); status_und_stuff = 200})
+
+	//console.log("this result should be a 200 or a 500 ")
+	//console.log("status_und_stuff")
+	//console.log(status_und_stuff)
+	//console.log("reslut")
+	//console.log(result)
 	return result
 }
 
 function verify_url( spec, url )
 { // check that the url passes the test
-	check = checkRemoteUrlOnLocal(url); //check contais the .text and .status_code
-	code = check
-	if (check == spec)
-	{
-		return "Ok" //KISS
-	}
-	else
-	{
-		return "The result doesn't match Spec;\n " + "check: " + check + "spec: " + spec
-	}
+	return checkRemoteUrlOnLocal(url); //check contais the .text and .status_code
+//	code = check
+//	if (check == spec)
+//	{
+//		return "Ok" //KISS
+//	}
+//	else
+//	{
+//		return "The result doesn't match Spec;\n " + "check: " + check + "spec: " + spec
+//	}
 }
 
 function get_base_url()
