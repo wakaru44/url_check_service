@@ -14,12 +14,15 @@ just a simple URL checker, that with a provided list of URL, it checks them on t
 
 a mock to test how to check the url on js.
 
+0.1 - using Skeleton.css, it shows a page with 4 sample tests, 2 valid and 2 failing, for 2 different url, one that fails and one that succedes (Example of how to check if a URL fails).
+
+
+
 # Next features
 
-- allow to specify multiple expectations (maybe it should fail and it means good)
+- a better way of configuring it is desirable 
 
-- take the list of url from the html. Get the link from the href. Get the expectations of the results from the body of the a
+	- getting the list from markdown in the page
+	- supporting on the backend some kind of file saving
 
-- button to check on demand
-
-- green/red colors
+- make it Async, the way it is, is embarrasing
