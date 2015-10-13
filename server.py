@@ -1,12 +1,13 @@
 from flask import Flask, render_template, send_file, request
 import requests
 from requests import ConnectionError
-import urllib
+from urllib3.exceptions import HTTPError, SSLError
 
 app = Flask(__name__)
 
 #template="index.html"
-template="index.html"
+template="jenkins.html"
+SSL_verification=False
 
 @app.route('/')
 def hello(name=None):
@@ -20,13 +21,21 @@ def hello(name=None):
 @app.route("/check")
 def check_route():
     url = request.args.get("url")
-
-    #url_test_encoding = urllib.urlencode({"url":"http://google.com"})
-    #return "testing {0}".format(url) if url else "no Url Provided. Use /check?url=htt..."
     try:
-        r = requests.get(url)
+        r = requests.get(url, verify=SSL_verification)
+    except SSLError as e:
+        print "SSL ERROR on {0}".format(url)
+        # and retry without try and no-verify SSL
+        r = requests.get(url, verify=False)
+        print "Attempted with no verify {0}".format(r.status_code)
+        return render_template("check.html", url = url), r.status_code
+
+    except HTTPError as e:
+        print "HTTP ERROR on {0}".format(url)
+        return render_template("check.html", url = url), 600
     except ConnectionError as e:
-        return render_template("check.html", url = url), 500
+        print "URL CHECK ERROR: {0}".format(e)
+        return render_template("check.html", url = url), 600
 
     return render_template("check.html", url = url), r.status_code
 
