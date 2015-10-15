@@ -21,6 +21,9 @@ def hello(name=None):
 @app.route("/check")
 def check_route():
     url = request.args.get("url")
+    if url is None or url == "":
+        return "Pleaze Bitch..." #TODO: Be more P.C. (Politically correct)
+
     try:
         r = requests.get(url, verify=SSL_verification)
     except SSLError as e:
@@ -37,7 +40,7 @@ def check_route():
         print "URL CHECK ERROR: {0}".format(e)
         return render_template("check.html", url = url), 600
 
-    return render_template("check.html", url = url), r.status_code
+    return render_template("check.html", url=url,status=status), status
 
 if __name__=="__main__":
     app.run( debug=True )
