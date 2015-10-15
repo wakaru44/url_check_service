@@ -20,15 +20,16 @@ def hello(name=None):
 @app.route("/check")
 def check_route():
     url = request.args.get("url")
+    if url is None or url == "":
+        return "Pleaze Bitch..." #TODO: Be more P.C. (Politically correct)
 
-    #url_test_encoding = urllib.urlencode({"url":"http://google.com"})
-    #return "testing {0}".format(url) if url else "no Url Provided. Use /check?url=htt..."
     try:
         r = requests.get(url)
+        status = r.status_code
     except ConnectionError as e:
-        return render_template("check.html", url = url), 500
+        status = 600
 
-    return render_template("check.html", url = url), r.status_code
+    return render_template("check.html", url=url,status=status), status
 
 if __name__=="__main__":
     app.run( debug=True )

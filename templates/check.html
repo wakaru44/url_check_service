@@ -3,10 +3,12 @@
 		</script>
         </head>
 	<body>
-	<h1>tested {{ url }}</h2>
+	<h1>tested {{ url }}</h1>
 	to test a url, you have to provide it encoded:
 
-	http://localhost:5000/check?url=http%3A%2F%2Fgoogle.com
-	</body
+	<a href="http://localhost:5000/check?url=http%3A%2F%2Fgoogle.com">http://localhost:5000/check?url=http%3A%2F%2Fgoogle.com</a>
+	
+	<p>The result of the current check is {{ status }} </p>
+	</body>
 </html>
 
