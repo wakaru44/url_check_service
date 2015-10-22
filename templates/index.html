@@ -1,8 +1,52 @@
 	<!--
-	<a class="check" href="example_of_url">test_to_validate</a>
+	<a class="button" href="example_of_url">test_to_validate</a>
 	-->
-	<a class="button" href="http://google.co.uk">200</a>
-	<a class="button" href="http://non-existant-url">500</a>
-	<a class="button" href="http://this_is_a_failing_test">200</a>
-	<a class="button" href="http://non-existant-url">200</a>
+	{% include "links.html" ignore missing %}
+	</div> <!-- tocheck -->
+
+      </div>
+    </div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+
+<script type="text/javascript">
+
+// And now we use jQuery to call the tester function, replacing the test with the result
+
+$( function () {
+	//do your stuff here
+$( "a" ).each(function( index, obj )
+{
+	var that = this
+	var spec = $(this).text();
+	var url = $(this).attr("href")
+	// Then do the query and wait for results
+	//check = checkRemoteUrlOnLocal(spec, url)
+
+	check = checkRemoteUrlOnLocal(url)
+	//And now we do the magic, replacing the text with results
+	check.always( function(response_data, responseText, xhrObject){
+		console.log("this is how we roll")
+		console.log(xhrObject.status)
+		console.log(xhrObject)
+		result_display = pass_the_test( spec, xhrObject, obj);
+		$(that).text( result_display ); 
+	});
+	check.fail( function(response_data, responseText, xhrObject){
+		result_display = pass_the_test(spec, xhrObject, obj);
+		$(that).text( result_display );
+	});
+})
+
+//end of async stuff
+
+});
+
+</script>
+	
+</body>
+</html>
 
