@@ -1,3 +1,3 @@
 
 
-python ./server.py >> url_check.$(date +%F).log &
+python ./server.py 2>> url_check.$(date +%F).log &
