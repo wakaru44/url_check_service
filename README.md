@@ -16,14 +16,16 @@ a mock to test how to check the url on js.
 
 0.1 - using Skeleton.css, it shows a page with 4 sample tests, 2 valid and 2 failing, for 2 different url, one that fails and one that succedes (Example of how to check if a URL fails).
 
+0.2 - Configured using markdown. Create a links.md file with the tests and the HTML will be created from there.
+
+    [200](url to check)
 
 
 # Next features
 
 - a better way of configuring it is desirable 
 
-	- getting the list from markdown in the page
-	- supporting on the backend some kind of file saving
+	- Support new checks from the fronted, with js.
 
 - make it Async, the way it is, is embarrasing
 
