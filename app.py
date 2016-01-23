@@ -2,7 +2,8 @@ from flask import Flask, render_template, send_file, request
 import requests
 import markdown
 from requests import ConnectionError
-from urllib3.exceptions import HTTPError, SSLError
+from urllib3.exceptions import HTTPError, SSLError, PoolError
+#from urllib3.exceptions import HTTPSConnectionPool 
 from bs4 import BeautifulSoup
 import souplib
 
@@ -31,7 +32,7 @@ def build_url_list(url_list = "links.md"):
        md_links = mdfh.readlines()
        html_links_raw = markdown.markdown(" ".join(md_links))
        # Now that we have the links as html, we need to insert the class="button" to the a's
-       bs = BeautifulSoup(html_links_raw)
+       bs = BeautifulSoup(html_links_raw, "html.parser")
        for link in bs.find_all("a"):
            souplib.update_attr(link, "class","button")
 
@@ -79,7 +80,8 @@ def check_route():
     except ConnectionError as e:
         print "URL CHECK ERROR: {0}".format(e)
         return render_template("check.html", url = url, status=status), status
-    except HTTPSConnectionPool as e:
+    except PoolError as e:
+    #except HTTPSConnectionPool as e:
         print "URL CHECK ERROR: {0}".format(e)
         return render_template("check.html", url = url, status=status), status
 
