@@ -13,6 +13,7 @@
   <title>URL Check :)</title>
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta http-equiv="refresh" content="60">
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -38,16 +39,13 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
     <div class="row">
-      <div class="twelve columns" style="margin-top: 25%">
-	<h1>Hi</h2>
-	<p> This is a simple URL checker.</p>
-	<p> Please put the list of URLs you want to check, as the href attribute of an A element each. In the text of the A element, place the validation it has to pass. Currently supported "200" for successful request and "500" for failing requests.</p>
-	<p>For more detail, see the example below, or even the code</p>
+      <div class="twelve columns" style="margin-top: 5%">
+	<h1>Picsolve Status</h2>
+	<p>Quick overview of our infrastructure, internal and external</p>
+	<p>If it's green, is good. Only failing ones show relevant info</p>
 	<div id="tocheck">
-	<!--
-	<a class="button" href="example_of_url">test_to_validate</a>
-	-->
-	{% include "links.html" ignore missing %}
+{% include "mytests.html" ignore missing %}
+{% include "links.html" ignore missing %}
 	</div> <!-- tocheck -->
 
       </div>
@@ -95,5 +93,6 @@ $( "a" ).each(function( index, obj )
 	
 </body>
 </html>
+
 
 
