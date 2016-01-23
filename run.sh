@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python app.py
+python app.py 2>> url_check.$(date +%F).log &

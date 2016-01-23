@@ -65,19 +65,23 @@ def check_route():
 
     try:
         r = requests.get(url, verify=SSL_verification)
+        status = r.status_code
+
     except SSLError as e:
         print "SSL ERROR on {0}".format(url)
         # and retry without try and no-verify SSL
         r = requests.get(url, verify=False)
         print "Attempted with no verify {0}".format(r.status_code)
-        return render_template("check.html", url = url), r.status_code
-
+        status = r.status_code
     except HTTPError as e:
         print "HTTP ERROR on {0}".format(url)
-        return render_template("check.html", url = url), 600
+        return render_template("check.html", url = url, status=status), status
     except ConnectionError as e:
         print "URL CHECK ERROR: {0}".format(e)
-        return render_template("check.html", url = url), 600
+        return render_template("check.html", url = url, status=status), status
+    except HTTPSConnectionPool as e:
+        print "URL CHECK ERROR: {0}".format(e)
+        return render_template("check.html", url = url, status=status), status
 
     return render_template("check.html", url=url,status=r.status_code), r.status_code
 
