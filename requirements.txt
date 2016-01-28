@@ -3,3 +3,5 @@ requests
 markdown
 urllib3
 souplib
+mock
+nose
